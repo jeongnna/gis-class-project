@@ -50,7 +50,7 @@ scale01 <- function(x) {
 
 # Data preprocessing ------------------------------------------------------
 
-# Coordinate system
+# coordinate system
 crs_wgs84 <- CRS("+init=EPSG:4326")
 crs_korea <- CRS("+init=EPSG:5186")
 # crs_wgs84 <- CRS("+proj=longlat +datum=WGS84 +no_defs 
@@ -58,7 +58,7 @@ crs_korea <- CRS("+init=EPSG:5186")
 # crs_korea <- CRS("+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=600000 
 #                  +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs")
 
-# Base map
+# base map
 path <- "data/shapefiles"
 base_map <- readOGR(path, "TL_SCCO_EMD")
 base_map <- base_map[str_detect(base_map$EMD_CD, "^11710"), ]
@@ -79,7 +79,7 @@ area <- sapply(base_map@polygons, function(x) x@area) / 1e6
 area <- round(area, 2)
 centroid <- gCentroid(base_map, byid=TRUE)
 
-# Population data
+# population data
 pop <- read_excel("data/pop.xlsx") %>% setNames(c("region", "n"))
 
 name_adjust <- c(
@@ -125,7 +125,7 @@ pop <-
 coordinates(pop) <- centroid@coords
 proj4string(pop) <- crs_korea
 
-# Floating population data
+# floating population data
 path <- "../data/shapefiles"
 fpop <- readOGR(path, "S_data_floating_pop")
 proj4string(fpop) <- crs_wgs84
@@ -135,7 +135,7 @@ colnames(fpop@coords) <- c("x", "y")
 fpop_over <- over(fpop, geometry(base_map))
 fpop <- fpop[!is.na(fpop_over), ]
 
-# Rental data
+# rental data
 rental <- 
   read_excel("../data/rental.xlsx") %>% 
   select(c(8, 7)) %>% 
@@ -150,10 +150,10 @@ colnames(rental@coords) <- c("x", "y")
 
 # Get score ---------------------------------------------------------------
 
-# Create grid
+# create grid
 grd <- create_grid_in_polygon(base_map, 10, crs_korea)
 
-# Interpolation (inverse distance weighting)
+# interpolation (inverse distance weighting)
 pop_idw <- 
   idw_tbl(formula=density ~ 1, locations=pop, newdata=grd) %>% 
   setNames(c("x", "y", "pop"))
@@ -162,12 +162,12 @@ fpop_idw <-
   idw_tbl(formula=POPULATION ~ 1, locations=fpop, newdata=grd) %>% 
   setNames(c("x", "y", "fpop"))
 
-# Interpolation (kernel density estimation)
+# interpolation (kernel density estimation)
 rental_kernel <- 
   kernel_density(grd@coords, rental@coords, r=1000, fold=100) %>% 
   setNames(c("x", "y", "rental"))
 
-# Score
+# score
 score_tbl <- 
   bind_cols(pop_idw, fpop_idw[3], rental_kernel[3]) %>% 
   mutate(score = scale01(pop) + scale01(fpop^0.25) + scale01(rental))
@@ -175,7 +175,7 @@ score_tbl <-
 
 # Drawing maps ------------------------------------------------------------
 
-# Layers
+# layers
 base_layer <- geom_polygon(
   data=base_map_tbl, 
   aes(x=x, y=y, group=group),
@@ -216,7 +216,7 @@ fpop.25_layer <- geom_tile(data=score_tbl, aes(x=x, y=y, fill=fpop^0.25))
 rental_layer <- geom_tile(data=score_tbl, aes(x=x, y=y, fill=rental))
 score_layer <- geom_tile(data=score_tbl, aes(x=x, y=y, fill=score))
 
-# Create maps
+# create maps
 p <- ggplot() +
   scale_fill_distiller(palette="RdBu", name=NULL) +
   annotation_scale(location="tr", plot_unit="m", style="ticks",
@@ -242,7 +242,7 @@ fpop.25_map <- p + fpop.25_layer + base_layer + text_layer
 rental_map <- p + rental_layer + base_layer + text_layer
 score_map <- p + score_layer + base_layer + text_layer
 
-# Save maps
+# save maps
 ggsave("../outputs/pop_point.png", pop_point, width=5, height=5)
 ggsave("../outputs/fpop_point.png", fpop_point, width=5, height=5)
 ggsave("../outputs/rental_point.png", rental_point, width=5, height=5)
