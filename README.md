@@ -9,9 +9,7 @@
 3. 서울 유동인구 → 송파구만 추출
 4. 송파구 따릉이 대여소 위치
 
-<img src="outputs/pop_point.png" width="250"/>
-<img src="outputs/fpop_point.png" width="250"/>
-<img src="outputs/rental_point.png" width="250"/>
+<img src="outputs/pop_point.png" width="250"/><img src="outputs/fpop_point.png" width="250"/><img src="outputs/rental_point.png" width="250"/>
 
 (그림: 왼쪽부터 동별 인구밀도, 지점별 유동인구, 자전거 대여소)
 
@@ -25,9 +23,7 @@
 
 유동인구는 극단값을 보정하기 위해 (*x* → *x<sup>0.25</sup>*)로 변환했습니다.
 
-<img src="outputs/pop_map.png" width="250"/>
-<img src="outputs/fpop.25_map.png" width="250"/>
-<img src="outputs/rental_map.png" width="250"/>
+<img src="outputs/pop_map.png" width="250"/><img src="outputs/fpop.25_map.png" width="250"/><img src="outputs/rental_map.png" width="250"/>
 
 (그림: 왼쪽부터 인구밀도 IDW 결과, 유동인구 IDW 결과, 따릉이 대여소 KDE 결과)
 
