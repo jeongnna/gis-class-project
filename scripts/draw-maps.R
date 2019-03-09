@@ -128,7 +128,7 @@ proj4string(pop) <- crs_korea
 
 # floating population data
 shp_dir <- "data/shapefiles"
-fpop <- readOGR(shp_dir, "S_data_floating_pop")
+fpop <- readOGR(shp_dir, "S_data_floating_pop", encoding = "EUC-KR")
 proj4string(fpop) <- crs_wgs84
 fpop <- spTransform(fpop, crs_korea)
 colnames(fpop@coords) <- c("x", "y")
