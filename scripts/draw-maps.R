@@ -186,7 +186,8 @@ base_layer <- geom_polygon(
 text_layer <- geom_text(
   data = as_tibble(pop@coords), 
   aes(x = x, y = y), 
-  label = pop@data$region
+  label = pop@data$region,
+  family = "NanumGothic"
 )
 pop_point_layer <- geom_point(
   data = pop@data, 
@@ -239,7 +240,7 @@ p <- ggplot() +
     pad_y = unit(1.25, "cm")
   ) +
   coord_fixed() +
-  theme_void()
+  theme_void(base_family = "NanumGothic")
 
 pop_point <- 
   p + pop_point_layer + base_layer + text_layer +
