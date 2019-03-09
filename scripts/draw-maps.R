@@ -61,7 +61,7 @@ crs_korea <- CRS("+init=EPSG:5186")
 
 # base map
 path <- "data/shapefiles"
-base_map <- readOGR(path, "TL_SCCO_EMD")
+base_map <- readOGR(path, "TL_SCCO_EMD", encoding = "EUC-KR")
 base_map <- base_map[str_detect(base_map$EMD_CD, "^11710"), ]
 base_map <- spTransform(base_map, crs_korea)
 
