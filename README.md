@@ -1,6 +1,6 @@
 농촌지리정보시스템 및 원격탐사 수업에서 GIS기반 공간정보분석 실습을 위해 진행한 프로젝트입니다.
 
-아래는 간단한 요약입니다. 프로젝트의 전체 내용은 [presentation.pdf](doc/presentation.pdf)에서 볼 수 있습니다.
+아래는 프로젝트 요약입니다. 전체 내용은 [presentation.pdf](doc/presentation.pdf)에서 볼 수 있습니다.
 
 ## Data
 
