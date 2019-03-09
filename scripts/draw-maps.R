@@ -115,7 +115,7 @@ pop <-
   group_by(region) %>% 
   summarize(n = sum(n))
 
-region_order <- match(base_map@data$EMP_KOR_NM, pop$region)
+region_order <- match(base_map@data$EMD_KOR_NM, pop$region)
 
 pop <-
   pop %>% 
