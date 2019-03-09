@@ -24,7 +24,7 @@ create_grid_in_polygon <- function(polygon, cell_size, crs) {
 
 idw_tbl <- function(formula, locations, newdata) {
   idw(formula = formula, locations = locations, newdata = grd) %>% 
-    as.tibble() %>% 
+    as_tibble() %>% 
     select(1:3)
 }
 
