@@ -42,7 +42,7 @@
     + 성내천 주변
     + 문정역/장지역 주변
 
-## 유용한 참고자료
+## 참고자료
 
 R에서 GIS 분석하기: [GIS in R](http://www.nickeubank.com/gis-in-r/)
 
